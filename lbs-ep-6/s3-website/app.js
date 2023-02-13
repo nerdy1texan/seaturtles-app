@@ -1,4 +1,4 @@
-var apiUrl = "API-URL-GOES-HERE"
+var apiUrl = "https://4ahbfnbbol.execute-api.us-east-1.amazonaws.com/seaturtles-f"
 
 var imageLoader = document.getElementById('imageLoader');
 var imageCanvas = document.getElementById('imageCanvas');
