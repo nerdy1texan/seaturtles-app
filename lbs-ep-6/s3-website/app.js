@@ -88,20 +88,34 @@ function argMax(array) {
     return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
 }
 
-function displayResponse(data){
+function displayResponse(data) {
+  var canvas = document.createElement("canvas");
+  var context = canvas.getContext("2d");
 
-    var bricks = ['Tree', 'Hot Dog', 'Tea'];
+  // Set the canvas dimensions to match the dimensions of the input image
+  canvas.width = image.width;
+  canvas.height = image.height;
 
-    console.log(data);
-    maxIndex = -1;
-    maxValue = null;
-    var i;
-    for (i = 0; i < data.length; i++) {
-        if (parseFloat(data[i]) > maxValue){
-            maxValue = parseFloat(data[i]);
-            maxIndex = i;
-        }
-    } 
+  // Draw the input image onto the canvas
+  context.drawImage(image, 0, 0);
+
+  // Loop through the output probabilities and draw a colored rectangle for each class
+  var bricks = ["Tree", "Hot Dog", "Tea"];
+  for (var i = 0; i < data.length; i++) {
+    var prob = parseFloat(data[i]);
+    var color = i == 0 ? "green" : i == 1 ? "red" : "blue";
+    context.fillStyle = color;
+    context.fillRect(0, i * 20, prob * canvas.width, 20);
+  }
+
+  // Create a new image element and set its source to the canvas data URL
+  var outputImage = new Image();
+  outputImage.src = canvas.toDataURL("image/png");
+
+  // Append the output image to the page
+  document.body.appendChild(outputImage);
+}
+
 
     console.log(bricks[maxIndex]);
     bannerText.innerText = bricks[maxIndex];
